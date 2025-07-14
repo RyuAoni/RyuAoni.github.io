@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>共創文化祭 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* リセット & ベース設定 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+      color: #e0e0e0;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* 背景アニメーション */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(0, 255, 255, 0.2) 0%, transparent 50%);
+      animation: float 20s ease-in-out infinite;
+      z-index: -1;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    
+    /* ヘッダー */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 10, 10, 0.1);
+      backdrop-filter: blur(20px);
+      padding: 1rem 2rem;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    .header:hover {
+      background: rgba(10, 10, 10, 0.2);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.4);
+    }
+    
+    .logo {
+      height: 50px;
+      filter: drop-shadow(0 0 10px rgba(0, 255, 255, 0.5));
+      transition: all 0.3s ease;
+    }
+    
+    .logo:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.8));
+    }
+    
+    .menu-btn {
+      display: block;
+      background: none;
+      border: none;
+      width: 35px;
+      height: 25px;
+      position: relative;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 100%;
+      height: 3px;
+      background-color: #e0e0e0;
+      position: absolute;
+      left: 0;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .menu-btn span:nth-child(1) { top: 0; }
+    .menu-btn span:nth-child(2) { top: 11px; }
+    .menu-btn span:nth-child(3) { top: 22px; }
+
+    /* ハンバーガーメニューがアクティブな状態 */
+    .menu-btn[aria-expanded="true"] span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 11px;
+    }
+    .menu-btn[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-btn[aria-expanded="true"] span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 11px;
+    }
+    
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+      animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .mobile-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 45px;
+      font-size: 2rem;
+    }
+    
+    .mobile-nav li {
+      text-align: center;
+    }
+    
+    .mobile-nav a {
+      color: #e0e0e0;
+      font-weight: 700;
+      text-decoration: none;
+      position: relative;
+      padding-bottom: 8px;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    
+    .mobile-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateX(-50%);
+    }
+    
+    .mobile-nav a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-nav a:hover {
+      color: white;
+    }
+    
+    /* メインビジュアル */
+    .main-visual {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .main-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 110, 0.1));
+      z-index: 1;
+    }
+    
+    .main-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7) contrast(1.2);
+    }
+    
+    .hero-content {
+      position: absolute;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 2rem;
+    }
+    
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient 4s ease infinite;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+    }
+    
+    @keyframes gradient {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .hero-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .hero-date {
+      font-size: 2rem;
+      font-weight: 600;
+      color: #06ffa5;
+      text-shadow: 0 0 20px rgba(6, 255, 165, 0.5);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    /* セクション共通 */
+    main {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    h2 {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: linear-gradient(45deg, #06ffa5, #3a86ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 3px;
+      background: linear-gradient(45deg, #06ffa5, #3a86ff);
+      border-radius: 3px;
+    }
+    
+    /* ニュース */
+    .news-container {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      margin-bottom: 3rem;
+    }
+    
+    .news-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .news-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      transition: left 0.5s;
+    }
+    
+    .news-card:hover::before {
+      left: 100%;
+    }
+    
+    .news-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(6, 255, 165, 0.5);
+      box-shadow: 0 20px 40px rgba(6, 255, 165, 0.2);
+    }
+    
+    .news-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+    
+    .news-date {
+      font-size: 0.9rem;
+      color: #06ffa5;
+      font-weight: 500;
+    }
+    
+    .more-link {
+      text-align: center;
+      margin-top: 3rem;
+    }
+    
+    .more-link a {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: linear-gradient(45deg, #ff006e, #8338ec);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .more-link a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, #8338ec, #3a86ff);
+      transition: left 0.3s ease;
+    }
+    
+    .more-link a:hover::before {
+      left: 0;
+    }
+    
+    .more-link a:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(131, 56, 236, 0.4);
+    }
+    
+    .more-link a span {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* フッター */
+    footer {
+      background: linear-gradient(45deg, #0a0a0a, #1a1a2e);
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(6, 255, 165, 0.3);
+      position: relative;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #06ffa5, transparent);
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .header {
+        padding: 1rem;
+      }
+      
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1.2rem;
+      }
+      
+      .hero-date {
+        font-size: 1.5rem;
+      }
+      
+      .news-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      main {
+        padding: 2rem 1rem;
+      }
+    }
+    
+    /* スクロールバー */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(45deg, #ff006e, #8338ec);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(45deg, #8338ec, #3a86ff);
+    }
+  </style>
+</head>
+<body>
+  <!-- ヘッダー -->
+  <header class="header">
+    <img src="img/logo.png" alt="文化祭ロゴ" class="logo" />
+    <button class="menu-btn" id="menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="mobile-nav" id="mobile-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="#news">ニュース</a></li>
+        <li><a href="news.html">お知らせ一覧</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- メインビジュアル -->
+  <section class="main-visual">
+    <img src="img/main.jpg" alt="共創文化祭 メインビジュアル" />
+    <div class="hero-content">
+      <h1 class="hero-title">共創文化祭</h1>
+      <p class="hero-subtitle">Creative Culture Festival</p>
+      <div class="hero-date">2025.07.10</div>
+    </div>
+  </section>
+
+  <!-- ニュース -->
+  <main>
+    <section id="news">
+      <h2>Latest News</h2>
+      <div class="news-container" id="news-container"></div>
+      <div class="more-link">
+        <a href="news.html"><span>→ もっと見る</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 共創文化祭実行委員会</p>
+  </footer>
+
+  <script>
+    const newsData = [
+      {
+        title: "文化祭まであと1週間！",
+        date: "2025-07-01",
+        url: "#1"
+      },
+      {
+        title: "模擬店の出店一覧を公開しました！",
+        date: "2025-06-28",
+        url: "#2"
+      },
+      {
+        title: "来場に関する注意事項を掲載しました",
+        date: "2025-06-25",
+        url: "#3"
+      },
+      {
+        title: "ステージスケジュールを更新しました",
+        date: "2025-06-20",
+        url: "#4"
+      },
+      {
+        title: "交通アクセス情報を追加しました",
+        date: "2025-06-15",
+        url: "#5"
+      }
+    ];
+
+    // トップページ：3件
+    const container = document.getElementById("news-container");
+    if (container) {
+      newsData.slice(0, 3).forEach((news, index) => {
+        const link = document.createElement("a");
+        link.href = news.url;
+        link.className = "news-card";
+        link.style.animationDelay = `${index * 0.2}s`;
+        link.innerHTML = `
+          <div class="news-title">${news.title}</div>
+          <div class="news-date">${news.date}</div>
+        `;
+        container.appendChild(link);
+      });
+    }
+
+    // 一覧ページ：すべて
+    const allContainer = document.getElementById("news-container-all");
+    if (allContainer) {
+      newsData.forEach((news, index) => {
+        const link = document.createElement("a");
+        link.href = news.url;
+        link.className = "news-card";
+        link.style.animationDelay = `${index * 0.1}s`;
+        link.innerHTML = `
+          <div class="news-title">${news.title}</div>
+          <div class="news-date">${news.date}</div>
+        `;
+        allContainer.appendChild(link);
+      });
+    }
+
+    // メニュー開閉
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileNav = document.getElementById("mobile-nav");
+    if (menuBtn && mobileNav) {
+      menuBtn.addEventListener("click", () => {
+        const isOpen = mobileNav.style.display === "flex";
+        mobileNav.style.display = isOpen ? "none" : "flex";
+        menuBtn.setAttribute("aria-expanded", !isOpen);
+      });
+    }
+
+    // スクロールでヘッダー透明度変更
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * 0.005;
+      header.style.background = `rgba(10, 10, 10, ${Math.min(0.8, 0.1 + rate)})`;
+    });
+  </script>
+</body>
+</html>
