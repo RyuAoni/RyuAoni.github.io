@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>共創文化祭 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* リセット & ベース設定 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --primary-black: #1a1a1a;
+      --secondary-black: #2d2d2d;
+      --accent-gold: #d4af37;
+      --accent-red: #c73e1d;
+      --text-white: #f5f5f5;
+      --text-gray: #b8b8b8;
+      --paper-texture: #faf9f6;
+    }
+    
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: linear-gradient(135deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+      color: var(--text-white);
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* 和紙テクスチャ背景 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(199, 62, 29, 0.1) 0%, transparent 50%);
+      opacity: 0.3;
+      z-index: -1;
+    }
+    
+    /* 墨の滲みエフェクト */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at top left, rgba(0, 0, 0, 0.4) 0%, transparent 70%),
+        radial-gradient(ellipse at bottom right, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* ヘッダー */
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(26, 26, 26, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    
+    .logo {
+      height: 50px;
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+    }
+    
+    .menu-btn {
+      display: block;
+      background: none;
+      border: none;
+      width: 35px;
+      height: 25px;
+      position: relative;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .menu-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background-color: var(--accent-gold);
+      position: absolute;
+      left: 0;
+      transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .menu-btn span:nth-child(1) { top: 0; }
+    .menu-btn span:nth-child(2) { top: 11px; }
+    .menu-btn span:nth-child(3) { top: 22px; }
+
+    .menu-btn[aria-expanded="true"] span:nth-child(1) {
+      transform: rotate(45deg);
+      top: 11px;
+    }
+    .menu-btn[aria-expanded="true"] span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-btn[aria-expanded="true"] span:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 11px;
+    }
+    
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(45, 45, 45, 0.95) 100%);
+      backdrop-filter: blur(20px);
+      z-index: 5;
+      animation: fadeIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .mobile-nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      font-size: 2.5rem;
+      text-align: center;
+    }
+    
+    .mobile-nav a {
+      color: var(--text-white);
+      font-weight: 300;
+      text-decoration: none;
+      position: relative;
+      padding: 10px 0;
+      transition: all 0.3s ease;
+      font-family: 'Noto Serif JP', serif;
+    }
+    
+    .mobile-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      transition: all 0.4s ease;
+      transform: translateX(-50%);
+    }
+    
+    .mobile-nav a:hover::after {
+      width: 100%;
+    }
+    
+    .mobile-nav a:hover {
+      color: var(--accent-gold);
+    }
+    
+    /* メインビジュアル */
+    .main-visual {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    
+    .main-visual::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        45deg, 
+        rgba(26, 26, 26, 0.7), 
+        rgba(45, 45, 45, 0.6)
+      );
+      z-index: 1;
+    }
+    
+    .main-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.4) contrast(1.1) sepia(0.1);
+    }
+    
+    .hero-content {
+      position: absolute;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 2rem;
+    }
+    
+    .hero-title {
+      font-size: clamp(4rem, 12vw, 8rem);
+      font-weight: 700;
+      font-family: 'Noto Serif JP', serif;
+      color: var(--text-white);
+      margin-bottom: 1rem;
+      position: relative;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      letter-spacing: 0.1em;
+    }
+    
+    .hero-title::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    }
+    
+    .hero-subtitle {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--text-gray);
+    }
+    
+    .hero-date {
+      font-size: 2.5rem;
+      font-weight: 500;
+      color: var(--accent-gold);
+      font-family: 'Noto Serif JP', serif;
+      text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+      letter-spacing: 0.1em;
+    }
+    
+    /* 装飾的な要素 */
+    .decorative-circle {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 50%;
+      top: 20%;
+      right: 10%;
+      z-index: 2;
+      animation: rotate 30s linear infinite;
+    }
+    
+    .decorative-circle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      border: 1px solid rgba(199, 62, 29, 0.2);
+      border-radius: 50%;
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* セクション共通 */
+    main {
+      padding: 6rem 2rem 4rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    h2 {
+      font-size: 3rem;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 4rem;
+      color: var(--text-white);
+      font-family: 'Noto Serif JP', serif;
+      position: relative;
+      letter-spacing: 0.1em;
+    }
+    
+    h2::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: var(--accent-gold);
+    }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    }
+    
+    /* ニュース */
+    .news-container {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      margin-bottom: 4rem;
+    }
+    
+    .news-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(212, 175, 55, 0.1);
+      border-radius: 0;
+      padding: 2rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .news-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+    
+    .news-card:hover::before {
+      transform: scaleX(1);
+    }
+    
+    .news-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(212, 175, 55, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .news-title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: var(--text-white);
+      font-family: 'Noto Serif JP', serif;
+      line-height: 1.6;
+    }
+    
+    .news-date {
+      font-size: 0.9rem;
+      color: var(--accent-gold);
+      font-weight: 300;
+      letter-spacing: 0.1em;
+    }
+    
+    .more-link {
+      text-align: center;
+      margin-top: 4rem;
+    }
+    
+    .more-link a {
+      display: inline-block;
+      padding: 1rem 3rem;
+      background: transparent;
+      color: var(--accent-gold);
+      text-decoration: none;
+      border: 2px solid var(--accent-gold);
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      letter-spacing: 0.1em;
+    }
+    
+    .more-link a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--accent-gold);
+      transition: left 0.3s ease;
+    }
+    
+    .more-link a:hover::before {
+      left: 0;
+    }
+    
+    .more-link a:hover {
+      color: var(--primary-black);
+    }
+    
+    .more-link a span {
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* フッター */
+    footer {
+      background: var(--primary-black);
+      text-align: center;
+      padding: 4rem 2rem;
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+      position: relative;
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    }
+    
+    footer p {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      letter-spacing: 0.1em;
+    }
+    
+    /* レスポンシブ */
+    @media (max-width: 768px) {
+      .header {
+        padding: 1rem;
+      }
+      
+      .hero-title {
+        font-size: 3rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      
+      .hero-date {
+        font-size: 2rem;
+      }
+      
+      .news-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      main {
+        padding: 4rem 1rem 2rem;
+      }
+      
+      .mobile-nav ul {
+        font-size: 2rem;
+        gap: 40px;
+      }
+      
+      .decorative-circle {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .decorative-circle::before {
+        width: 50px;
+        height: 50px;
+      }
+    }
+    
+    /* スクロールバー */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: var(--primary-black);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent-gold);
+      border-radius: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-red);
+    }
+  </style>
+</head>
+<body>
+  <div class="decorative-circle"></div>
+  
+  <!-- ヘッダー -->
+  <header class="header">
+    <img src="img/logo.png" alt="文化祭ロゴ" class="logo" />
+    <button class="menu-btn" id="menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="mobile-nav" id="mobile-nav">
+      <ul>
+        <li><a href="index.html">ホーム</a></li>
+        <li><a href="#news">ニュース</a></li>
+        <li><a href="news.html">お知らせ一覧</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- メインビジュアル -->
+  <section class="main-visual">
+    <img src="img/main.jpg" alt="共創文化祭 メインビジュアル" />
+    <div class="hero-content">
+      <h1 class="hero-title">共創文化祭</h1>
+      <p class="hero-subtitle">KYOSO CULTURE FESTIVAL</p>
+      <div class="hero-date">2025.07.10</div>
+    </div>
+  </section>
+
+  <!-- ニュース -->
+  <main>
+    <section id="news">
+      <h2>お知らせ</h2>
+      <div class="news-container" id="news-container"></div>
+      <div class="more-link">
+        <a href="news.html"><span>もっと見る</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 共創文化祭実行委員会</p>
+  </footer>
+
+  <script>
+    const newsData = [
+      {
+        title: "文化祭まであと1週間！",
+        date: "2025-07-01",
+        url: "#1"
+      },
+      {
+        title: "模擬店の出店一覧を公開しました！",
+        date: "2025-06-28",
+        url: "#2"
+      },
+      {
+        title: "来場に関する注意事項を掲載しました",
+        date: "2025-06-25",
+        url: "#3"
+      },
+      {
+        title: "ステージスケジュールを更新しました",
+        date: "2025-06-20",
+        url: "#4"
+      },
+      {
+        title: "交通アクセス情報を追加しました",
+        date: "2025-06-15",
+        url: "#5"
+      }
+    ];
+
+    // トップページ：3件
+    const container = document.getElementById("news-container");
+    if (container) {
+      newsData.slice(0, 3).forEach((news, index) => {
+        const link = document.createElement("a");
+        link.href = news.url;
+        link.className = "news-card";
+        link.innerHTML = `
+          <div class="news-title">${news.title}</div>
+          <div class="news-date">${news.date}</div>
+        `;
+        container.appendChild(link);
+      });
+    }
+
+    // 一覧ページ：すべて
+    const allContainer = document.getElementById("news-container-all");
+    if (allContainer) {
+      newsData.forEach((news, index) => {
+        const link = document.createElement("a");
+        link.href = news.url;
+        link.className = "news-card";
+        link.innerHTML = `
+          <div class="news-title">${news.title}</div>
+          <div class="news-date">${news.date}</div>
+        `;
+        allContainer.appendChild(link);
+      });
+    }
+
+    // メニュー開閉
+    const menuBtn = document.getElementById("menu-btn");
+    const mobileNav = document.getElementById("mobile-nav");
+    if (menuBtn && mobileNav) {
+      menuBtn.addEventListener("click", () => {
+        const isOpen = mobileNav.style.display === "flex";
+        mobileNav.style.display = isOpen ? "none" : "flex";
+        menuBtn.setAttribute("aria-expanded", !isOpen);
+      });
+    }
+
+    // スクロールでヘッダー透明度変更
+    window.addEventListener('scroll', () => {
+      const header = document.querySelector('.header');
+      const scrolled = window.pageYOffset;
+      const opacity = Math.min(0.95, 0.7 + (scrolled * 0.001));
+      header.style.background = `rgba(26, 26, 26, ${opacity})`;
+    });
+  </script>
+</body>
+</html>
